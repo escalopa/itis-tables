@@ -7,6 +7,14 @@ import (
 	"github.com/escalopa/itis-tables/core"
 )
 
+type TableParser interface {
+	PraseTable(ctx context.Context, coursesPath string) error
+}
+
+type Course interface {
+	ParseCourses(ctx context.Context, coursesPath string) error
+}
+
 type TableRepository interface {
 	GetSchedule(ctx context.Context, day time.Weekday) ([]core.Subject, error)
 	SetShedule(ctx context.Context, day time.Weekday, subjects []core.Subject) error
@@ -14,7 +22,7 @@ type TableRepository interface {
 
 type CourseRepository interface {
 	GetCourse(ctx context.Context, studentID string) ([]core.Course, error)
-	SetCourse(ctx context.Context, studentID string, course core.Course) error
+	SetCourse(ctx context.Context, studentID string, course []core.Course) error
 }
 
 type EvenOddDate interface {
