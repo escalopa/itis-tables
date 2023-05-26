@@ -8,14 +8,14 @@ import (
 )
 
 type TableRepository struct {
-	db map[string]map[time.Weekday][]core.Subject
+	db map[string]map[time.Weekday][][]core.Subject
 }
 
 func NewTableRepository() *TableRepository {
-	return &TableRepository{db: make(map[string]map[time.Weekday][]core.Subject)}
+	return &TableRepository{db: make(map[string]map[time.Weekday][][]core.Subject)}
 }
 
-func (tr *TableRepository) GetSchedule(ctx context.Context, group string, day time.Weekday) ([]core.Subject, error) {
+func (tr *TableRepository) GetSchedule(ctx context.Context, group string, day time.Weekday) ([][]core.Subject, error) {
 	if _, ok := tr.db[group]; !ok {
 		return nil, core.ErrNotFound("could not find group: ", group)
 	}
@@ -26,9 +26,9 @@ func (tr *TableRepository) GetSchedule(ctx context.Context, group string, day ti
 	return subjects, nil
 }
 
-func (tr *TableRepository) SetShedule(ctx context.Context, group string, day time.Weekday, subjects []core.Subject) error {
+func (tr *TableRepository) SetShedule(ctx context.Context, group string, day time.Weekday, subjects [][]core.Subject) error {
 	if _, ok := tr.db[group]; !ok {
-		tr.db[group] = make(map[time.Weekday][]core.Subject)
+		tr.db[group] = make(map[time.Weekday][][]core.Subject)
 	}
 	tr.db[group][day] = subjects
 	return nil
