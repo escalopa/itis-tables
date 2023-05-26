@@ -6,7 +6,6 @@ services:
     restart: unless-stopped
     volumes:
       - .:/go/src/github.com/escalopa/table/
-      - ./csv/:/csv/
     environment:
     - TABLE_PATH=${TABLE_PATH}
     - COURSES_PATH=${COURSES_PATH}

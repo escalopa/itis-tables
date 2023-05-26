@@ -13,5 +13,4 @@ RUN go build -o /go/bin/table ./cmd
 FROM alpine:latest AS production
 RUN apk add --no-cache tzdata
 COPY --from=builder /go/bin/table /go/bin/table
-COPY ./csv /csv
 ENTRYPOINT ["/go/bin/table"]
