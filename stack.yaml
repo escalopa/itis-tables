@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  itis-tables:
+    image: dekuyo/itis-table:latest
+    environment:
+      - START_TIME=2023-02-09
+      - PORT=9090
+      - TABLES_URL=https://kpfu.ru/main_page
+      - TABLES_PSUB=6241
+  ports:
+    - 8090:9090

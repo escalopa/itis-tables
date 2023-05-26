@@ -13,7 +13,8 @@ services:
     - PORT=${PORT}
     - TABLES_URL=${TABLES_URL}
     - TABLES_PSUB=${TABLES_PSUB}
-
+    ports:
+      - ${PORT}:${PORT}
     build:
       context: .
       dockerfile: ./Dockerfile
