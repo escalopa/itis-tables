@@ -7,8 +7,6 @@ services:
     volumes:
       - .:/go/src/github.com/escalopa/table/
     environment:
-    - TABLE_PATH=${TABLE_PATH}
-    - COURSES_PATH=${COURSES_PATH}
     - START_TIME=${START_TIME}
     - PORT=${PORT}
     - TABLES_URL=${TABLES_URL}

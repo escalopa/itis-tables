@@ -8,5 +8,5 @@ services:
       - PORT=9090
       - TABLES_URL=https://kpfu.ru/main_page
       - TABLES_PSUB=6241
-  ports:
-    - 8090:9090
+    ports:
+      - "8090:9090"
