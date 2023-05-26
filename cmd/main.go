@@ -21,29 +21,21 @@ func main() {
 		log.Println("app is shutting down")
 	}()
 
-	cr := memory.NewCourseRepository()
-	tr := memory.NewTableRepository()
-
-	tp := parser.NewTableParser(tr)
-	cp := parser.NewCourseParser(cr)
+	log.Println("app is starting")
 
 	var err error
 
-	// Parse tables
-	err = tp.PraseTable(appCtx, os.Getenv("TABLE_PATH"))
-	if err != nil {
-		log.Println("failed to parse tables", err)
-		return
-	}
-	log.Println("parsing table is done")
+	// Create tables repository
+	tr := memory.NewTableRepository()
+	log.Println("repositories are created")
 
-	// Parse courses
-	err = cp.ParseCourses(appCtx, os.Getenv("COURSES_PATH"))
-	if err != nil {
-		log.Println("failed to parse tables", err)
-		return
-	}
-	log.Println("parsing courses is done")
+	// Create tables parsers
+	tp := parser.NewTableParser(tr)
+	log.Println("parsers are created")
+
+	// Creaet page fetcher
+	pf := parser.NewPageFetcher(os.Getenv("TABLES_URL"), os.Getenv("TABLES_PSUB"))
+	log.Println("page fetcher is created")
 
 	// Create even odd date time
 	startTime, err := time.Parse("2006-01-02", os.Getenv("START_TIME"))
@@ -58,8 +50,9 @@ func main() {
 
 	// Create Usecases with repositories
 	uc := application.New(appCtx,
-		application.WithCourseRepository(cr),
 		application.WithTableRepository(tr),
+		application.WithTableParser(tp),
+		application.WithPageFetcher(pf),
 		application.WithEvenOddDate(eod),
 	)
 
