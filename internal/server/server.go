@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -23,7 +24,7 @@ func New(ctx context.Context, uc *application.UseCase) *Server {
 }
 
 func (s *Server) Run(port string) error {
-	http.HandleFunc("/table", s.tableHandler)
+	http.HandleFunc("/tables", s.tableHandler)
 
 	// Start the server
 	log.Printf("Starting server on port %s...\n", port)
@@ -58,6 +59,6 @@ func (s *Server) tableHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Write the result to the response
-	fmt.Fprintf(w, "Result: %s", tables)
+	w.Header().Add("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(tables)
 }
