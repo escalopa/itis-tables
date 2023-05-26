@@ -59,6 +59,11 @@ func (s *Server) tableHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(tables) == 0 {
+		http.Error(w, "No tables found", http.StatusNotFound)
+		return
+	}
+
 	w.Header().Add("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(tables)
 }

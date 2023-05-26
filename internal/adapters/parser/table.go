@@ -31,14 +31,11 @@ func (tp *TableParser) PraseTable(ctx context.Context, doc *html.Node) (map[time
 	}
 
 	table := make(map[time.Weekday][][]core.Subject, 0)
-	for c := doc.FirstChild; c != nil; c = c.NextSibling {
+	for c := doc.FirstChild.NextSibling.NextSibling; c != nil; c = c.NextSibling {
 		if c.Type == html.ElementNode && c.Data == "tr" {
 			period := doTR(c)
 			if len(period) == 0 {
 				continue
-			}
-			if len(period) < len(core.DaysInOrder) {
-				return nil, core.ErrInvalid("table row length is not equal to the number of days")
 			}
 			for i, day := range core.DaysInOrder {
 				table[day] = append(table[day], period[i])
@@ -147,7 +144,7 @@ func doA(n *html.Node) string {
 	var s string
 	for c := n.FirstChild; c != nil; c = c.NextSibling {
 		if c.Type == html.TextNode {
-			s += c.Data + doA(c.FirstChild)
+			s += c.Data
 		}
 	}
 	return s
