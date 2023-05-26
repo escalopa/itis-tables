@@ -8,16 +8,16 @@ import (
 )
 
 type TableParser interface {
-	PraseTable(ctx context.Context, coursesPath string) error
+	PraseTable(ctx context.Context, tablesPath string) error
 }
 
-type Course interface {
+type CourseParser interface {
 	ParseCourses(ctx context.Context, coursesPath string) error
 }
 
 type TableRepository interface {
-	GetSchedule(ctx context.Context, day time.Weekday) ([]core.Subject, error)
-	SetShedule(ctx context.Context, day time.Weekday, subjects []core.Subject) error
+	GetSchedule(ctx context.Context, group string, day time.Weekday) ([]core.Subject, error)
+	SetShedule(ctx context.Context, group string, day time.Weekday, subjects []core.Subject) error
 }
 
 type CourseRepository interface {
