@@ -12,6 +12,9 @@ services:
     - COURSES_PATH=${COURSES_PATH}
     - START_TIME=${START_TIME}
     - PORT=${PORT}
+    - TABLES_URL=${TABLES_URL}
+    - TABLES_PSUB=${TABLES_PSUB}
+
     build:
       context: .
       dockerfile: ./Dockerfile
